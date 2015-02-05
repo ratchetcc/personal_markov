@@ -32,5 +32,8 @@ EXPOSE 3000
 # add the app itself
 ADD . /opt/app/
 
+# prepare the app
+WORKDIR /opt/app
+
 # run the script to deploy / update the app
 CMD ["ls -la /opt/app"]

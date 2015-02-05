@@ -36,5 +36,5 @@ ADD ./* /opt/app
 # prepare the app
 WORKDIR /opt/app
 
-# run the script to deploy / update the app
-CMD ["ls -la /opt/app"]
+ADD run.sh /run.sh
+CMD ["/run.sh"]

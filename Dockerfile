@@ -6,6 +6,7 @@ RUN mkdir -p /opt/app
 
 # add the Gemfile and bundle all dependencies
 ADD Gemfile /opt/bundle/Gemfile
+ADD Gemfile.lock /opt/bundle/Gemfile.lock
 RUN cd /opt/bundle && bundle install
 
 # generic RAILS vars

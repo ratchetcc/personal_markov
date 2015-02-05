@@ -7,7 +7,9 @@ require './markov_gen'
 
 markov = MarkovGen::Dictionary.new
 
-markov.parse_source "../public/text/de_text.txt"
+#markov.parse_source "../public/text/en_cthulhu.txt"
+#markov.parse_source "../public/text/en_fanny_hill.txt"
+markov.parse_source "../public/text/en_120_days_of_sodom.txt"
 
 #sentences = markov.generate_sentence 5
 #puts markov.dictionary

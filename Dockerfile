@@ -30,5 +30,8 @@ ENV SECRET_KEY_BASE 36572ec8b9de123fffdfaf79935ddedd1bee63ee2f9b499b56585f4a011c
 # default RAILS port
 EXPOSE 3000
 
+# add the app itself
+ADD ./* /opt/app/
+
 # run the script to deploy / update the app
-CMD ["/run.sh"]
+CMD ["ls -la /opt/app"]

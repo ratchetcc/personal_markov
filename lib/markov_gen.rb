@@ -28,7 +28,6 @@ module MarkovGen
     def parse_source(source)
       if File.exists?(source)
         contents = File.open(source, "r").read.split(@split_sentence)
-        puts contents
       else
         raise FileNotFoundError.new("#{source} does not exist!")
       end

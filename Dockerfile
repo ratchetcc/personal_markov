@@ -31,7 +31,7 @@ ENV SECRET_KEY_BASE 36572ec8b9de123fffdfaf79935ddedd1bee63ee2f9b499b56585f4a011c
 EXPOSE 3000
 
 # add the app itself
-ADD . /opt/app
+ADD ./* /opt/app
 
 # prepare the app
 WORKDIR /opt/app

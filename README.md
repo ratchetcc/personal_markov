@@ -1,9 +1,7 @@
 Personal Markov
 ================
 
-Simple Rails 4.2 template app based on TEMPLATED (http://templated.co). Nothing fancy here ...
-
-a b
+Simple Rails 4.2 template app
 
 Build the Docker image
 ---
@@ -14,5 +12,5 @@ Build the Docker image
 Run the Docker image
 ---
 	
-	docker run --name="rat_markov" --dns=8.8.8.8 -e REPO="https://github.com/ratchetcc/personal_markov.git" -p 20000:3000 ratchetcc/personal_markov
+	docker run --name="personal_markov" -e REPO="https://github.com/ratchetcc/personal_markov.git" -p 1010:3000 getmajordomus/personal_markov
 	

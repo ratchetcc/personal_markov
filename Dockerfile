@@ -1,4 +1,4 @@
-FROM getmajordomus/majord-ruby
+FROM getmajordomus/majord-rails
 MAINTAINER Michael Kuehl <hello@ratchet.cc>
 
 # add the Gemfile and bundle all dependencies

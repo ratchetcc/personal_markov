@@ -1,11 +1,11 @@
 
 require 'json'
 
-module Mindcast
+module Markov
   
   class Assets < Endpoint
         
-    get "/v#{Mindcast::API_VERSION}/assets" do
+    get "/v#{Markov::API_VERSION}/assets" do
       http_status = 200
       resp = {}
       
@@ -45,7 +45,7 @@ module Mindcast
       
     end
     
-    get "/v#{Mindcast::API_VERSION}/asset/:sku" do
+    get "/v#{Markov::API_VERSION}/asset/:sku" do
       http_status = 200
       resp = {}
       
@@ -79,4 +79,4 @@ module Mindcast
     
   end # class Assets 
    
-end # module Mindcast
+end # module Markov

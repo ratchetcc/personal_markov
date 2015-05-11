@@ -1,4 +1,4 @@
-module Mindcast
+module Markov
   
   # The version of the mindcast proxy
   VERSION = "0.1.0"
@@ -7,6 +7,6 @@ module Mindcast
   API_VERSION = "1"
   
   # Codename of the release
-  CODENAME = "Mindfuck"
+  CODENAME = "Markov"
   
 end

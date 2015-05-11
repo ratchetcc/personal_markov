@@ -1,9 +1,9 @@
 
-module Mindcast
+module Markov
   
   def request_params(args, path, method='POST')
     content_type = 'application/json'
-    user_agent = "Majordomus #{Majordomus::VERSION}"
+    user_agent = "Majordomus #{Markov::VERSION}"
 
     {
       :method => method,

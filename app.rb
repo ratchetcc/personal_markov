@@ -16,9 +16,9 @@ require 'sinatra/base'
 require "sinatra/reloader"
 
 # our modules etc
-require 'mindcast'
+require 'markov'
 
-module Mindcast
+module Markov
   class App < Sinatra::Application
       
     configure do
@@ -26,8 +26,8 @@ module Mindcast
     end
     
     # include other apps, modules etc
-    use Mindcast::Status
-    use Mindcast::Assets
+    use Markov::Status
+    use Markov::Assets
     
   end
 end

@@ -1,9 +1,9 @@
 
 require 'json'
 require 'excon'
-require 'mindcast/exceptions'
+require 'markov/exceptions'
 
-module Mindcast
+module Markov
   
   class Endpoint < Sinatra::Application
     

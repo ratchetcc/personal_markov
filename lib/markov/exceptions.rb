@@ -1,5 +1,5 @@
 
-module Mindcast
+module Markov
   
   class AuthorizationError < StandardError
     

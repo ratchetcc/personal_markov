@@ -1,7 +1,7 @@
 
 require 'json'
 
-module Mindcast
+module Markov
   
   class Status < Endpoint
      
@@ -13,8 +13,8 @@ module Mindcast
       begin
         # do something
         resp = {
-          :version => Mindcast::VERSION,
-          :codename => Mindcast::CODENAME,
+          :version => Markov::VERSION,
+          :codename => Markov::CODENAME,
           :status => "OK"
         }
       

@@ -1,3 +1,3 @@
 require './app'
 
-run Mindcast::App
+run Markov::App

@@ -27,7 +27,7 @@ module Markov
     
     # include other apps, modules etc
     use Markov::Status
-    use Markov::Assets
+    use Markov::Tweet
     
   end
 end

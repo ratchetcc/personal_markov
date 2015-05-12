@@ -9,7 +9,7 @@ module Markov
   require 'markov/version'
   require 'markov/exceptions'
   require 'markov/api/endpoint'
-  require 'markov/api/assets'
+  require 'markov/api/tweet'
   require 'markov/api/status'
   
 end

@@ -16,4 +16,4 @@ RUN bundle install --without development test
 ADD . /app/
 
 # start the app using a script
-CMD ["rackup"]
+#CMD ["rackup"]

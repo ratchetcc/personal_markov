@@ -47,7 +47,7 @@ module Markov
     
     get "/markov" do
       @sentences = @@markov.generate_sentence 4
-      erb :foo
+      erb :markov
     end
     
   end # class Markov 

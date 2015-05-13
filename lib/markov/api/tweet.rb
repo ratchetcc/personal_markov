@@ -11,14 +11,14 @@ module Markov
     configure do
       @@markov = MarkovGen::Dictionary.new 3, 26
       
-      #Dir["public/text/en_*"].each do | f |
-      #  puts "*** Analyzing '#{f}' "
-      #  @@markov.parse_source f
-      #end
+      Dir["public/text/en_*"].each do | f |
+        puts "*** Analyzing '#{f}' "
+        @@markov.parse_source f
+      end
       
       # just some texts for now
       #@@markov.parse_source "public/text/en_bible.txt"
-      @@markov.parse_source "public/text/en_cthulhu.txt"
+      #@@markov.parse_source "public/text/en_cthulhu.txt"
       
     end
       
@@ -27,7 +27,7 @@ module Markov
       resp = {}
       
       begin
-        sentences = @@markov.generate_sentence 4
+        sentences = @@markov.generate_sentence 3
         
         resp = {
           :text => sentences
@@ -45,8 +45,8 @@ module Markov
       
     end
     
-    get "/markov" do
-      @sentences = @@markov.generate_sentence 4
+    get "/" do
+      @sentences = @@markov.generate_sentence 3
       erb :markov
     end
     

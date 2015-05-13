@@ -9,11 +9,11 @@ WORKDIR /app
 ADD Gemfile /app/Gemfile
 ADD Gemfile.lock /app/Gemfile.lock
 
-# add the app itself
-ADD . /app/
-
 # add the Gemfile and bundle all dependencies
 RUN bundle install --without development test
 
+# add the app itself
+ADD . /app/
+
 # start the app using a script
-CMD ["bin/run.sh"]
+CMD ["rackup"]

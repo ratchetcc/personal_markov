@@ -15,5 +15,7 @@ RUN bundle install --without development test
 # add the app itself
 ADD . /app/
 
+ENV RACK_ENV production
+
 # start the app using a script
 #CMD ["rackup"]

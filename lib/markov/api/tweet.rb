@@ -1,18 +1,36 @@
 
 require 'json'
+require 'markov/generator/markov_gen'
 
 module Markov
   
   class Tweet < Endpoint
-        
+      
+    @@markov = nil 
+    
+    configure do
+      @@markov = MarkovGen::Dictionary.new 3, 26
+      
+      #Dir["public/text/en_*"].each do | f |
+      #  puts "*** Analyzing '#{f}' "
+      #  @@markov.parse_source f
+      #end
+      
+      # just some texts for now
+      #@@markov.parse_source "public/text/en_bible.txt"
+      @@markov.parse_source "public/text/en_cthulhu.txt"
+      
+    end
+      
     get "/v#{Markov::API_VERSION}/markov" do
       http_status = 200
       resp = {}
       
       begin
+        sentences = @@markov.generate_sentence 4
         
         resp = {
-          :text => "fjkfdj fgjdf fdlgj fdjlg dfjg df"
+          :text => sentences
         }
          
       rescue => e
@@ -27,6 +45,11 @@ module Markov
       
     end
     
+    get "/markov" do
+      @sentences = @@markov.generate_sentence 4
+      erb :foo
+    end
+    
   end # class Markov 
-   
+  
 end # module Markov

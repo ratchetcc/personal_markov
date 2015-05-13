@@ -8,8 +8,8 @@ $: << File.expand_path('../', __FILE__)
 $: << File.expand_path('../lib', __FILE__)
 
 # load ENV from a .env file, development only!
-require 'dotenv'
-Dotenv.load
+#require 'dotenv'
+#Dotenv.load
 
 # Require sinatra basics
 require 'sinatra/base'

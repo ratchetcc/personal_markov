@@ -3,9 +3,7 @@ GEM
   specs:
     backports (3.6.4)
     daemons (1.2.1)
-    dotenv (2.0.0)
     eventmachine (1.0.7)
-    excon (0.44.4)
     multi_json (1.11.0)
     rack (1.6.0)
     rack-protection (1.5.3)
@@ -34,8 +32,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  dotenv
-  excon
   rack-standards
   sinatra
   sinatra-contrib

@@ -1,6 +1,6 @@
 
 require 'json'
-require 'excon'
+#require 'excon'
 require 'markov/exceptions'
 
 module Markov

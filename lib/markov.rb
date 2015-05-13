@@ -1,7 +1,7 @@
 
 require 'json'
 require 'yaml'
-require 'excon'
+#require 'excon'
 
 # The top-level module for the Majordomus API
 module Markov

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.2.0'
+#ruby '2.2.2'
 
 # basics
 gem 'sinatra'
@@ -12,5 +12,5 @@ gem 'tilt'
 
 # runtime
 gem 'thin'
-gem 'dotenv'
-gem 'excon'
+#gem 'dotenv'
+#gem 'excon'

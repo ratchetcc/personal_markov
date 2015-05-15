@@ -9,8 +9,7 @@ gem 'rack-standards'
 
 # UI
 gem 'tilt'
+gem 'rack-cache'
 
 # runtime
 gem 'thin'
-#gem 'dotenv'
-#gem 'excon'

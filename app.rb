@@ -7,10 +7,6 @@ Bundler.require
 $: << File.expand_path('../', __FILE__)
 $: << File.expand_path('../lib', __FILE__)
 
-# load ENV from a .env file, development only!
-#require 'dotenv'
-#Dotenv.load
-
 # Require sinatra basics
 require 'sinatra/base'
 require "sinatra/reloader"
@@ -26,8 +22,7 @@ module Markov
     end
     
     # include other apps, modules etc
-    use Markov::Status
-    use Markov::Tweet
+    use Markov::Main
     
   end
 end

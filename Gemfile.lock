@@ -6,6 +6,8 @@ GEM
     eventmachine (1.0.7)
     multi_json (1.11.0)
     rack (1.6.0)
+    rack-cache (1.2)
+      rack (>= 0.4)
     rack-protection (1.5.3)
       rack
     rack-standards (0.0.1)
@@ -32,6 +34,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  rack-cache
   rack-standards
   sinatra
   sinatra-contrib

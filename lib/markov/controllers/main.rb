@@ -1,5 +1,5 @@
 
-require 'markov/generator/markov_gen'
+require 'markov/generator'
 
 module Markov
   
@@ -8,7 +8,7 @@ module Markov
     @@markov = nil 
     
     configure do
-      @@markov = MarkovGen::Dictionary.new 3, 26
+      @@markov = Markov::Generator.new 3, 26
       
       Dir["public/text/en_*"].each do | f |
         puts "*** Analyzing '#{f}' "
@@ -21,7 +21,7 @@ module Markov
     end
           
     get "/" do
-      @sentences = @@markov.generate_sentence 3
+      @sentences = @@markov.generate_sentence 60
       erb :markov
     end
     

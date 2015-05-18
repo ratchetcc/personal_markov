@@ -7,7 +7,7 @@ module Markov
   
   class Generator
     
-    attr_reader :depth
+    attr_reader :depth, :dictionary, :start_words, :unparsed_sentences
     
     def initialize(depth=3)
       @depth = depth
@@ -93,6 +93,24 @@ module Markov
       tokens_to_sentence tokens
     end
       
+    def dump_start_words
+      @start_words.keys.each do |words|
+        puts "#{words[0]},#{words[1]}"
+      end
+    end
+    
+    def dump_dictionary
+      @dictionary.keys.each do |words|
+        following = @dictionary[words]
+        sentence = "#{words[0]},#{words[1]},"
+        following.each do |s|
+          sentence << "#{s.word},"
+        end
+        
+        puts "#{sentence.slice(0,sentence.length-1)}"
+      end
+    end
+    
     private
     
     def parse_text
@@ -255,3 +273,11 @@ module Markov
   end
   
 end
+
+#markov = Markov::Generator.new
+
+#Dir["../../public/text/seed_*"].each do | f |
+#  markov.parse_source_file f
+#end
+
+#markov.dump_dictionary

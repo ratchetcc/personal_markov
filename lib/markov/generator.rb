@@ -202,6 +202,7 @@ module Markov
       # replace unwanted characterts
       sentence.gsub(/["„':_()]/,"")
       sentence.gsub(/-/,"")
+      sentence.gsub(/,/,"")
       
       parts = sentence.split(@split_words)
       if parts && !parts.empty?

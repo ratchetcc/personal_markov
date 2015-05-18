@@ -59,13 +59,13 @@ module Markov
       prev_token = tokens.last
       
       begin
-        token = select_next_word tokens.last(@depth-1)
+        token =  select_next_token tokens.last(@depth-1)
         
         if token.kind == :stop
-          token = select_next_word tokens.last(@depth-1) if prev_token.kind == :special
+          token =  select_next_word tokens.last(@depth-1) if prev_token.kind == :special
           tokens << token
         elsif token.kind == :special
-          token = select_next_word tokens.last(@depth-1) if prev_token.kind == :special
+          token =  select_next_word tokens.last(@depth-1) if prev_token.kind == :special
           tokens << token
         elsif token.kind == :noop
           token = Token.new(".", :stop)
@@ -236,11 +236,19 @@ module Markov
       @start_words[ @start_words.keys[rand( @start_words.keys.length)]]
     end
     
-    def select_next_word(tokens)
+    def select_next_token(tokens)
       token = @dictionary[ tokens_to_words(tokens)]
       
       return Token.new("X", :noop) if token == nil  
       token[rand(tokens.length-1)]
+    end
+    
+    def select_next_word(tokens)
+      token = nil
+      begin
+        token = select_next_token(tokens)
+      end until token.kind == :word
+      token
     end
     
   end

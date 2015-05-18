@@ -8,7 +8,7 @@ module Markov
     @@markov = nil 
     
     configure do
-      @@markov = Markov::Generator.new 3
+      @@markov = Markov::Generator.new
       
       Dir["public/text/seed_*"].each do | f |
         puts "*** Analyzing '#{f}' "

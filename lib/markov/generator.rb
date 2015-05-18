@@ -11,7 +11,7 @@ module Markov
     
     def initialize(depth=3)
       @depth = depth
-      @split_words = /([',.?!\n])|[\s]+/
+      @split_words = /([',.?!\n-])|[\s]+/
       @split_sentence = /(?<=[.!?\n])\s+/
       @dictionary = {}
       @start_words = {}
@@ -62,8 +62,10 @@ module Markov
         token = select_next_word tokens.last(@depth-1)
         
         if token.kind == :stop
+          token = select_next_word tokens.last(@depth-1) if prev_token.kind == :special
           tokens << token
         elsif token.kind == :special
+          token = select_next_word tokens.last(@depth-1) if prev_token.kind == :special
           tokens << token
         elsif token.kind == :noop
           token = Token.new(".", :stop)
@@ -179,10 +181,8 @@ module Markov
     
     def add_unparsed_sentence(sentence)
       # replace unwanted characterts
-      sentence.gsub(/["()]/,"")
-      sentence.gsub(/[„()]/,"")
-      sentence.gsub(/['()]/,"")
-      sentence.gsub(/[“()]/,"")
+      sentence.gsub(/["„':_()]/,"")
+      sentence.gsub(/-/,"")
       
       parts = sentence.split(@split_words)
       if parts && !parts.empty?

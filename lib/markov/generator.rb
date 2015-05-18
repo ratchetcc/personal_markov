@@ -17,6 +17,7 @@ module Markov
       @start_words = {}
       @unparsed_sentences = []
       @tokens = []
+      @rg = Random.new
     end
     
     class FileNotFoundError < Exception # :nodoc:
@@ -233,14 +234,14 @@ module Markov
     end
     
     def select_start_words
-      @start_words[ @start_words.keys[rand( @start_words.keys.length)]]
+      @start_words[ @start_words.keys[@rg.rand( @start_words.keys.length)]]
     end
     
     def select_next_token(tokens)
       token = @dictionary[ tokens_to_words(tokens)]
       
       return Token.new("X", :noop) if token == nil  
-      token[rand(tokens.length-1)]
+      token[@rg.rand(tokens.length-1)]
     end
     
     def select_next_word(tokens)

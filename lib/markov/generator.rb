@@ -46,52 +46,50 @@ module Markov
       
     end
     
-    def generate_sentence(wordcount=30)
+    def generate_sentence(min_length=20)
       if @dictionary.empty?
         raise EmptyDictionaryError.new("The dictionary is empty! Parse a source file/string first!")
       end
       
-      sentence = []
-      select_start_words.each {|w| sentence << w}
-      
+      tokens = []
       complete_sentence = false
-      i = 1
       
-      prev_token = select_next_word sentence.last(@depth-1)
+      # initialize
+      select_start_words.each {|w| tokens << w}
+      prev_token = tokens.last
+      
       begin
-        token = select_next_word sentence.last(@depth-1)
-        if prev_token.kind == :special && token.kind == :stop
-          begin
-            token = select_next_word sentence.last(@depth-1)
-          end until token.kind == :word
+        token = select_next_word tokens.last(@depth-1)
+        
+        if token.kind == :stop
+          tokens << token
+        elsif token.kind == :special
+          tokens << token
+        elsif token.kind == :noop
+          token = Token.new(".", :stop)
+          tokens[tokens.length-1] = token
+        else
+          tokens << token
         end
         
-        if token.kind == :word
-          sentence << token.word
-        else
-          sentence << token.word
-          if (token.kind == :stop && i < wordcount)
-            select_start_words.each {|w| sentence << w}
+        prev_token = token
+        
+        if token.kind == :stop
+          if tokens.size < min_length
+            select_start_words.each {|w| tokens << w}
+            prev_token = tokens.last
+          else
+            complete_sentence = true
           end
         end
         
-        i = i + 1
-        complete_sentence = true if (i > wordcount and token.kind == :stop)
+        # circuit-breaker
+        complete_sentence = true if tokens.size > min_length*2 
       end until complete_sentence
       
-      s = ""
-      sentence.each do |word|
-        if [',','.','?','!',':',';'].include? word
-          s << word
-        else
-          s << " " + word
-        end
-      end
+      tokens_to_sentence tokens
+    end
       
-      s[1, s.length-1]
-      
-    end # generate_sentence
-    
     private
     
     def parse_text
@@ -197,16 +195,17 @@ module Markov
       return if tokens[0].kind != :word
       
       tokens[0].word = tokens[0].word.capitalize
-      words = tokens_to_words tokens
+      start_words = tokens_to_words tokens
       
-      @start_words[words] ||= 0
-      @start_words[words] = @start_words[words] + 1
+      @start_words[start_words] ||= tokens
       
     end
     
     def add_to_dictionary(tokens)
-      key_words = tokens_to_words tokens[0, @depth-1]     
       token = tokens.last
+      return if token.word == ""
+      
+      key_words = tokens_to_words tokens[0, @depth-1]     
       
       @dictionary[key_words] ||= []
       @dictionary[key_words] << token
@@ -220,36 +219,30 @@ module Markov
       words
     end
 
-    def select_start_words
-      @start_words.keys[rand(@start_words.keys.length)]
+    def tokens_to_sentence(tokens)
+      s = ""
+      tokens.each do |t|
+        if t.kind != :word
+          s << t.word
+        else
+          s << " " + t.word
+        end
+      end
+    
+      s[1, s.length-1]
     end
     
-    def select_next_word(prev_words)
-      tokens = @dictionary[prev_words]
+    def select_start_words
+      @start_words[ @start_words.keys[rand( @start_words.keys.length)]]
+    end
+    
+    def select_next_word(tokens)
+      token = @dictionary[ tokens_to_words(tokens)]
       
-      return Token.new("X", :stop) if tokens == nil  
-      tokens[rand(tokens.length-1)]
+      return Token.new("X", :noop) if token == nil  
+      token[rand(tokens.length-1)]
     end
     
   end
   
 end
-
-
-#markov = MarkovGenerator::Dictionary.new
-
-#markov.parse_source_file "../../../public/text/de_grimm.txt"
-#markov.parse_source_file "../../../public/text/de_poe.txt"
-
-#puts "DICT:\n#{markov.dictionary}"
-#puts "START:\n#{markov.start_words}"
-
-#puts markov.generate_sentence 25
-
-#d = markov.dictionary
-#d.keys.each do |word|
-#  tokens = d[word]
-#  if tokens.size > 1
-#    puts "#{word}(#{tokens.size}) -> #{tokens}"
-#  end
-#end

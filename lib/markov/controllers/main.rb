@@ -10,13 +10,10 @@ module Markov
     configure do
       @@markov = Markov::Generator.new 3
       
-      #Dir["public/text/en_*"].each do | f |
-      #  puts "*** Analyzing '#{f}' "
-      #  @@markov.parse_source_file f
-      #end
-      
-      # just some texts for now
-      @@markov.parse_source_file "public/text/en_cthulhu.txt"
+      Dir["public/text/en_*"].each do | f |
+        puts "*** Analyzing '#{f}' "
+        @@markov.parse_source_file f
+      end
       
     end
           

@@ -2,20 +2,20 @@
 module Markov
   
   class Token < Struct.new(:word, :kind)
+    # used as an internal structure to hold words etc
   end
   
   class Generator
     
-    attr_reader :dictionary, :start_words, :depth, :sentence_length
+    attr_reader :depth
     
-    def initialize(depth=3,length=30)
+    def initialize(depth=3)
       @depth = depth
-      @sentence_length = length
       @split_words = /([',.?!\n])|[\s]+/
       @split_sentence = /(?<=[.!?\n])\s+/
       @dictionary = {}
       @start_words = {}
-      @sentences = []
+      @unparsed_sentences = []
       @tokens = []
     end
     
@@ -25,68 +25,24 @@ module Markov
     class EmptyDictionaryError < Exception # :nodoc:
     end
     
-    def parse_source(source)
+    def parse_string(sentence)
+      add_unparsed_sentence sentence
+      parse_text
+    end
+    
+    def parse_source_file(source)
       
       if File.exists?(source)
-        contents = File.open(source, "r").read.split(@split_sentence)
+        sentences = File.open(source, "r").read.split(@split_sentence)
       else
         raise FileNotFoundError.new("#{source} does not exist!")
       end
       
-      # replace unwanted characterts
-      contents.map! {|sentence| sentence.gsub(/["()]/,"")}
-      contents.map! {|sentence| sentence.gsub(/[„()]/,"")}
-      contents.map! {|sentence| sentence.gsub(/['()]/,"")}
-      contents.map! {|sentence| sentence.gsub(/[“()]/,"")}
-      
-      # add a period if it is missing
-      if( !contents.empty? && !['.', '!', '?'].include?( contents[-1].strip[-1] ) )
-        contents[-1] = contents[-1].strip + '.'
+      sentences.each do |sentence|
+        add_unparsed_sentence sentence
       end
       
-      contents.each do |sentence|
-        parts = sentence.split(@split_words).delete_if{ |e| e.length == 0 }
-        @sentences << parts
-      end
-      
-      state = :start # :start, :word, :special, :stop, :end
-      word_seq = []
-      
-      begin
-        while token = next_token
-          
-          if state == :start
-            word_seq << token
-            
-            (@depth-word_seq.size).times do
-              word_seq << next_token
-            end
-            
-            add_to_start_words word_seq[0, @depth-1]
-            add_to_word word_seq
-            
-            token = next_token
-            
-            state = :sentence
-          end
-          
-          if state == :sentence
-            word_seq.slice!(0)
-            word_seq << token
-            
-            add_to_word word_seq
-            
-            if token.kind == :stop
-              word_seq = []
-              state = :start
-            end  
-          end
-          
-        end
-        
-      rescue
-        # nothing to rescue
-      end
+      parse_text
       
     end
     
@@ -96,17 +52,17 @@ module Markov
       end
       
       sentence = []
-      random_start.each {|w| sentence << w}
+      select_start_words.each {|w| sentence << w}
       
       complete_sentence = false
       i = 1
       
-      prev_token = weighted_random sentence.last(@depth-1)
+      prev_token = select_next_word sentence.last(@depth-1)
       begin
-        token = weighted_random sentence.last(@depth-1)
+        token = select_next_word sentence.last(@depth-1)
         if prev_token.kind == :special && token.kind == :stop
           begin
-            token = weighted_random sentence.last(@depth-1)
+            token = select_next_word sentence.last(@depth-1)
           end until token.kind == :word
         end
         
@@ -115,7 +71,7 @@ module Markov
         else
           sentence << token.word
           if (token.kind == :stop && i < wordcount)
-            random_start.each {|w| sentence << w}
+            select_start_words.each {|w| sentence << w}
           end
         end
         
@@ -138,9 +94,57 @@ module Markov
     
     private
     
+    def parse_text
+            
+      state = :start # :start, :word, :special, :stop
+      word_seq = []
+      
+      begin
+        while token = next_token
+          
+          if state == :start
+            word_seq << token
+            
+            # fill the array
+            (@depth-word_seq.size).times do
+              word_seq << next_token
+            end
+            
+            # need to store the words in both the dictionary 
+            # and the list of start words
+            add_to_start_words word_seq[0, @depth-1]
+            add_to_dictionary word_seq
+            
+            token = next_token
+            state = :sentence
+          end
+          
+          if state == :sentence
+            # move the array one position
+            word_seq.slice!(0)
+            word_seq << token
+            
+            # add to the dictionary
+            add_to_dictionary word_seq
+            
+            # stop current sequence and start again
+            if token.kind == :stop
+              word_seq = []
+              state = :start
+            end  
+          end
+          
+        end # end while
+        
+      rescue
+        # nothing to rescue
+      end
+      
+    end # end parse_text
+    
     def next_token
       if @tokens.empty?
-        sentence = @sentences.slice!(0)
+        sentence = @unparsed_sentences.slice!(0)
         if sentence
           sentence.each do |word|
             
@@ -175,6 +179,20 @@ module Markov
       nil  
     end # end next_token
     
+    def add_unparsed_sentence(sentence)
+      # replace unwanted characterts
+      sentence.gsub(/["()]/,"")
+      sentence.gsub(/[„()]/,"")
+      sentence.gsub(/['()]/,"")
+      sentence.gsub(/[“()]/,"")
+      
+      parts = sentence.split(@split_words)
+      if parts && !parts.empty?
+        @unparsed_sentences << parts
+      end
+      
+    end
+    
     def add_to_start_words(tokens)
       return if tokens[0].kind != :word
       
@@ -186,12 +204,12 @@ module Markov
       
     end
     
-    def add_to_word(tokens)
-      root = tokens_to_words tokens[0, @depth-1]     
+    def add_to_dictionary(tokens)
+      key_words = tokens_to_words tokens[0, @depth-1]     
       token = tokens.last
       
-      @dictionary[root] ||= []
-      @dictionary[root] << token
+      @dictionary[key_words] ||= []
+      @dictionary[key_words] << token
     end
     
     def tokens_to_words(tokens)
@@ -202,17 +220,14 @@ module Markov
       words
     end
 
-    def random_start
+    def select_start_words
       @start_words.keys[rand(@start_words.keys.length)]
     end
     
-    def weighted_random(last)
-      tokens = @dictionary[last]
+    def select_next_word(prev_words)
+      tokens = @dictionary[prev_words]
       
-      #return Token.new("X", :stop) if tokens == nil  
-      if tokens == nil
-        return Token.new("X", :stop)
-      end
+      return Token.new("X", :stop) if tokens == nil  
       tokens[rand(tokens.length-1)]
     end
     
@@ -223,8 +238,8 @@ end
 
 #markov = MarkovGenerator::Dictionary.new
 
-#markov.parse_source "../../../public/text/de_grimm.txt"
-#markov.parse_source "../../../public/text/de_poe.txt"
+#markov.parse_source_file "../../../public/text/de_grimm.txt"
+#markov.parse_source_file "../../../public/text/de_poe.txt"
 
 #puts "DICT:\n#{markov.dictionary}"
 #puts "START:\n#{markov.start_words}"

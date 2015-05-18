@@ -8,15 +8,15 @@ module Markov
     @@markov = nil 
     
     configure do
-      @@markov = Markov::Generator.new 3, 26
+      @@markov = Markov::Generator.new 3
       
-      Dir["public/text/en_*"].each do | f |
-        puts "*** Analyzing '#{f}' "
-        @@markov.parse_source f
-      end
+      #Dir["public/text/en_*"].each do | f |
+      #  puts "*** Analyzing '#{f}' "
+      #  @@markov.parse_source_file f
+      #end
       
       # just some texts for now
-      #@@markov.parse_source "public/text/en_cthulhu.txt"
+      @@markov.parse_source_file "public/text/en_cthulhu.txt"
       
     end
           

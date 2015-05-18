@@ -10,7 +10,7 @@ module Markov
     configure do
       @@markov = Markov::Generator.new 3
       
-      Dir["public/text/en_*"].each do | f |
+      Dir["public/text/seed_*"].each do | f |
         puts "*** Analyzing '#{f}' "
         @@markov.parse_source_file f
       end

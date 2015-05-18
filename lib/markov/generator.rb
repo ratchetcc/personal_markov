@@ -234,7 +234,7 @@ module Markov
     end
     
     def select_start_words
-      @start_words[ @start_words.keys[@rg.rand( @start_words.keys.length)]]
+      @start_words[ @start_words.keys[@rg.rand( @start_words.keys.length-1)]]
     end
     
     def select_next_token(tokens)

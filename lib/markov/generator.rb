@@ -1,4 +1,6 @@
 
+require 'securerandom'
+
 module Markov
   
   class Token < Struct.new(:word, :kind)
@@ -253,14 +255,14 @@ module Markov
     end
     
     def select_start_words
-      @start_words[ @start_words.keys[@rg.rand( @start_words.keys.length-1)]]
+      @start_words[ @start_words.keys[random_number( @start_words.keys.length-1)]]
     end
     
     def select_next_token(tokens)
       token = @dictionary[ tokens_to_words(tokens)]
       
       return Token.new("X", :noop) if token == nil  
-      token[@rg.rand(tokens.length-1)]
+      token[random_number(tokens.length-1)]
     end
     
     def select_next_word(tokens)
@@ -271,6 +273,9 @@ module Markov
       token
     end
     
+    def random_number(upper_limit)
+      (SecureRandom.random_number * upper_limit).to_i
+    end
   end
   
 end

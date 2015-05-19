@@ -18,7 +18,7 @@ module Markov
     end
           
     get "/" do
-      @sentences = @@markov.generate_sentence 32
+      @sentences = @@markov.generate_sentence 40
       erb :markov
     end
     

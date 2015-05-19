@@ -12,4 +12,7 @@ ENV RACK_ENV production
 EXPOSE 9292
 
 # run the script to deploy / update the app
-CMD ["/app/bin/run.sh"]
+ADD bin/run.sh /run.sh
+RUN chmod +x /run.sh
+
+CMD ["run.sh"]

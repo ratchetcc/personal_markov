@@ -40,7 +40,7 @@ module Markov
       end
       
       sentences.each do |sentence|
-        add_unparsed_sentence sentence.encode('UTF-8')
+        add_unparsed_sentence sentence.encode('ISO-8859-1')
       end
       
       parse_text

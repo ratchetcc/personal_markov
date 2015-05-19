@@ -34,7 +34,7 @@ module Markov
     def parse_source_file(source)
       
       if File.exists?(source)
-        sentences = File.open(source, "r").read.split(@split_sentence)
+        sentences = File.open(source, "r").read.force_encoding("iso-8859-1").split(@split_sentence)
       else
         raise FileNotFoundError.new("#{source} does not exist!")
       end

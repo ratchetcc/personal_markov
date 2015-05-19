@@ -14,3 +14,6 @@ Personal Markov_, an experiment in generating random text based on classical lit
 	docker run -d --name markov -p 10030:9292 getmajordomus/personal_markov rackup -o 0.0.0.0
 	
 
+	
+	docker run -d --name markov -p 10030:9292 -e REPO="https://github.com/ratchetcc/personal_markov.git" getmajordomus/personal_markov
+	

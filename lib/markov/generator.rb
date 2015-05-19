@@ -19,7 +19,7 @@ module Markov
       @start_words = {}
       @unparsed_sentences = []
       @tokens = []
-      @rg = Random.new
+      srand
     end
     
     class FileNotFoundError < Exception # :nodoc:
@@ -274,7 +274,8 @@ module Markov
     end
     
     def random_number(upper_limit)
-      (SecureRandom.random_number * upper_limit).to_i
+      (rand() * upper_limit).to_i
+      #(SecureRandom.random_number * upper_limit).to_i
     end
   end
   

@@ -15,4 +15,5 @@ EXPOSE 9292
 ADD bin/run.sh run.sh
 RUN chmod +x run.sh
 
+
 #CMD ["./run.sh"]

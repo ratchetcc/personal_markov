@@ -4,7 +4,7 @@ GEM
     backports (3.6.4)
     daemons (1.2.2)
     eventmachine (1.0.7)
-    markov-generator (0.9.1)
+    markov-generator (0.9.2)
     multi_json (1.11.0)
     rack (1.6.1)
     rack-cache (1.2)
@@ -35,7 +35,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  markov-generator (~> 0.9.0)
+  markov-generator (= 0.9.2)
   rack-cache
   rack-standards
   sinatra

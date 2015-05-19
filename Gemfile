@@ -8,7 +8,7 @@ gem 'sinatra-contrib'
 gem 'rack-standards'
 
 # markov generator
-gem 'markov-generator', '~> 0.9.0'
+gem 'markov-generator', '0.9.2'
 
 # UI
 gem 'tilt'

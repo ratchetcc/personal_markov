@@ -9,7 +9,7 @@ $: << File.expand_path('../lib', __FILE__)
 
 # Require sinatra basics
 require 'sinatra/base'
-require "sinatra/reloader"
+require 'sinatra/reloader' if development?
 
 # our modules etc
 require 'markov'

@@ -274,8 +274,7 @@ module Markov
     end
     
     def random_number(upper_limit)
-      (rand() * upper_limit).to_i
-      #(SecureRandom.random_number * upper_limit).to_i
+      (SecureRandom.random_number * upper_limit).to_i
     end
   end
   

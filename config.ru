@@ -1,7 +1,4 @@
+# This file is used by Rack-based servers to start the application.
 
-require 'rack/cache'
-require './app'
-
-use Rack::Cache, :metastore => 'heap:/', :entitystore => 'heap:/', :verbose => true
-
-run Markov::App
+require ::File.expand_path('../config/environment', __FILE__)
+run Rails.application

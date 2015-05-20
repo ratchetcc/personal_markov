@@ -13,11 +13,4 @@
  *= require_tree .
  *= require_self
  *= require font-awesome
- *= require skel
- *= require style
- *= require style-large
- *= require style-medium
- *= require style-small
- *= require style-xlarge
- *= require style-xsmall
  */

@@ -1,2 +1,78 @@
-<h1>Markov_ says:</h1>
-<p><%= @markov %></p>
+<body class="landing">
+	
+	<header id="header">
+		<h1><a href="/">Personal Markov_</a></h1>
+		
+		<nav id="nav">
+			<ul>
+				<li><a href="/#footer">About</a></li>
+			</ul>
+		</nav>
+
+	</header>
+
+	<section id="banner">
+		<h2>Markov_ says:</h2>
+		
+		<p>"<%= @markov %>"</p>
+		
+		<ul class="actions">
+			<li>
+				<a href="/" class="button">New Markov_</a>
+			</li>
+		</ul>
+	</section>
+
+	<section id="one" class="wrapper style1 align-center">
+		<div class="container">
+			<header>
+				<h2>Probabilistic text generation</h2>
+				<p>Personal Markov_, an experiment in generating random text based on classical literature and stuff* from the internet. (*NSFW)</p>
+			</header>
+		</div>
+	</section>
+
+	<footer id="footer">
+		<div class="container">
+			<div class="row">
+				<section class="4u 6u(medium) 12u$(small)">
+					<h3>What are Markov Chains?</h3>
+					<p>According to Wikipedia, a Markov Chain is a random process where the next state is dependent on the previous state.</p>
+					<ul class="alt">
+						<li><a href="https://en.wikipedia.org/wiki/Markov_chain" target="_main">For an in-depth explanation see the Wikipedia article</a></li>
+					</ul>
+				</section>
+				<section class="4u 6u$(medium) 12u$(small)">
+					<h3>Seed Texts</h3>
+					<p>To train the Markov generator, texts from the Project Gutenberg website were used. </p>
+					<ul class="alt">
+						<li><a href="https://www.gutenberg.org/" target="_main">Project Gutenberg</a></li>
+					</ul>
+				</section>
+				<section class="4u$ 12u$(medium) 12u$(small)">
+					<h3>Get in Touch</h3>
+					
+					<ul class="icons">
+						<li><a href="#" class="icon rounded fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon rounded fa-facebook"><span class="label">Facebook</span></a></li>
+					</ul>
+						
+					<ul class="tabular">
+
+						<li>
+							<h3>Mail</h3>
+							<a href="#">markov@ratchet.cc</a>
+						</li>
+
+					</ul>
+				</section>
+			</div>
+			<ul class="copyright">
+				<li>&copy; A project by <a href="http://ratchet.cc" target="_main">ratchet.cc</a>. All rights reserved.</li>
+				<li>Design based on: <a href="http://templated.co" target="_main">TEMPLATED</a></li>
+				<li>Images: <a href="http://unsplash.com" target="_main">Unsplash</a></li>
+			</ul>
+		</div>
+	</footer>
+
+</body>

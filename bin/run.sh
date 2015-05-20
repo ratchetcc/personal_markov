@@ -29,4 +29,4 @@ fi
 /usr/local/bin/bundle exec rake assets:precompile RAILS_ENV=production
 
 # start the app server
-/usr/local/bin/bundle exec rails s -b 0.0.0.0 -e production
+/usr/local/bin/bundle exec rails s -b 0.0.0.0 -e $RAILS_ENV

@@ -31,15 +31,16 @@
 /* Banner */
 
 	#banner {
-		padding: 10em 2em 8em;
+		padding: 4em 1em 4em;
 	}
 
 		#banner h2 {
 			font-size: 2.25em;
 		}
-
+		
 		#banner p {
 			font-size: 1.25em;
+			margin: 10px 40px 10px;
 		}
 
 /* Wrapper */
